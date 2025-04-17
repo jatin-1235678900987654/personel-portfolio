@@ -78,6 +78,20 @@
     @media (max-width: 768px) {
       nav ul { flex-direction: column; align-items: center; }
     }
+
+    .parallax {
+  background: url('https://images.unsplash.com/photo-1557683316-973673baf926') no-repeat center center fixed;
+  background-size: cover;
+  min-height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 2rem;
+  font-weight: bold;
+  text-shadow: 1px 1px 5px black;
+}
+
   </style>
 </head>
 <body>
@@ -99,6 +113,10 @@
     <a href="#projects" class="btn">See My Work</a>
   </section>
 
+  <div class="parallax">
+    Discover My Design World 🌍
+  </div>
+  
   <!-- 👨‍💻 About Section -->
   <section id="about">
     <h2 class="section-title">About Me</h2>
@@ -110,6 +128,10 @@
 
   <!-- 💡 Requirement 5: Social Interaction Simulation -->
   <p style="text-align:center; font-style:italic;" id="viewer-status">Checking who’s viewing this...</p>
+
+  <!-- Voice Narration Button -->
+<button class="music-toggle" id="narration-toggle" style="right: 150px;">🎙️ Narration On</button>
+
 
 <!-- 💼 Projects -->
 <section id="projects">
@@ -126,15 +148,16 @@
         </a>
       </div>
   
-      <!-- 🔗 Project 2: Stick Hero Game -->
+      <!-- <!-- 🔗 Project 2: Stick Hero Game -->
+
       <div class="project-card">
-        <a href="https://github.com/jatin-1235678900987654/Stick-Hero-Game" target="_blank">
-          <img 
-            src="https://user-images.githubusercontent.com/122114314/273425760-5d694d0d-35b3-4a7d-8597-52ce357e5421.png"
-            class="card-img"
-            alt="Stick Hero Game Preview">
-        </a>
+        <h3 style="text-align:center;">Scan QR to Experience My Game in AR</h3>
+        <img 
+          src="https://api.qrserver.com/v1/create-qr-code/?data=https://github.com/jatin-1235678900987654/Stick-Hero-Game"
+          alt="QR Code to Game"
+          class="card-img" />
       </div>
+      
   
     </div>
   </section>
@@ -151,6 +174,17 @@
       <button type="submit" class="btn">Send</button>
     </form>
   </section>
+
+
+  <section>
+    <h2 class="section-title">🗣️ Testimonials</h2>
+    <form style="max-width: 500px; margin:auto;">
+      <input type="text" placeholder="Your Name" required style="width: 100%; padding: 10px; margin: 10px 0;">
+      <textarea placeholder="Your Experience" rows="4" required style="width: 100%; padding: 10px;"></textarea>
+      <button type="submit" class="btn">Add Testimonial</button>
+    </form>
+  </section>
+  
 
   <!-- 🧠 Requirement 4: Intelligent Agent / Virtual Assistant -->
   <div id="agent" class="agent">
@@ -219,10 +253,39 @@
       btn.addEventListener("click", () => clickSound.play());
     });
 
+    const hour = new Date().getHours();
+if (hour >= 19 || hour < 6) {
+  document.body.style.background = "#0a0a23";
+  document.body.style.color = "orange";
+} else {
+  document.body.style.background = "#f0f0f0";
+  document.body.style.color = "#111";
+}
+
+
     // Social Viewer Simulator
     const names = ["Riya", "John", "Guest from Delhi", "Anonymous 👀"];
     document.getElementById("viewer-status").textContent =
       `${names[Math.floor(Math.random() * names.length)]} is also viewing this now.`;
+
+
+
+      const narration = new SpeechSynthesisUtterance("Welcome to Jatin's Portfolio! Explore the sections to know more about my work and design journey.");
+const narrationToggle = document.getElementById("narration-toggle");
+let narrationPlaying = false;
+
+narrationToggle.onclick = () => {
+  if (!narrationPlaying) {
+    speechSynthesis.speak(narration);
+    narrationPlaying = true;
+    narrationToggle.textContent = "🛑 Narration Off";
+  } else {
+    speechSynthesis.cancel();
+    narrationPlaying = false;
+    narrationToggle.textContent = "🎙️ Narration On";
+  }
+};
+
   </script>
 </body>
 </html>
